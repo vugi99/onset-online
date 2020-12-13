@@ -1,0 +1,29 @@
+{
+	"author": "Pindrought",
+	"version": "2.0",
+	"server_scripts": [
+		"config.lua",
+		"server/main.lua"
+	],
+	"client_scripts": [
+		"config.lua",
+		"client/main.lua"
+	],
+	"files": [
+		"client/web/map.html",
+		"client/web/map.css",
+		"client/web/map.js",
+        "client/web/map.jpg",
+        "client/web/minimap.html",
+        "client/web/minimap.css",
+		"client/web/minimap.js",
+		"client/web/playermarker.png",
+		"client/web/destination.png",
+		"client/web/icons/check.png",
+		"client/web/icons/shield.png",
+		"client/web/icons/shopping-cart.png",
+		"client/web/icons/x.png",
+		"client/web/fonts/Roboto-Regular.ttf",
+		"client/web/fonts/Roboto-Light.ttf"
+	]
+}

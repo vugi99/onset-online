@@ -1,0 +1,18 @@
+.counterContainer {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    width: 100%;
+}
+
+.counterBox {
+    border: 2px solid gray;
+    background-color: black;
+    color: red;
+    font-family: lcd;
+    font-size: 4vh;
+    text-align: center;
+    width: 15vw;
+    opcaity: 0.8;
+}

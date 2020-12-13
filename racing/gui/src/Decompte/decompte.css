@@ -1,0 +1,14 @@
+@font-face {
+    font-family: sr;
+    src: url(http://asset/online/racing/gui/build/fonts/sr.ttf);
+}
+
+.decompte {
+    font-family: sr, Arial, Helvetica, sans-serif;
+    display: fixed;
+    margin-top: 5%;
+    top: 0;
+    text-align: center;
+    font-size: 12vh;
+    color: red;
+}

@@ -1,0 +1,8 @@
+.checkpointPassed {
+    font-family: lcd;
+    font-size: 6vh;
+    color: green;
+    text-align: center;
+    width: 100%;
+    margin-top: 10vh;
+}

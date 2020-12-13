@@ -1,0 +1,21 @@
+@font-face {
+  font-family: lcd;
+  src: url(http://asset/online/racing/gui/build/fonts/lcd.TTF);
+}
+
+@font-face {
+  font-family: fr;
+  src: url(http://asset/online/racing/gui/build/fonts/fr.ttf);
+}
+
+.helpFooter {
+  background-color: transparent;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  font-family: fr;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  font-size: 4vh;
+}

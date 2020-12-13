@@ -1,0 +1,8 @@
+.position {
+    position: fixed;
+    right: 2vw;
+    top: 4vh;
+    color: green;
+    font-size: 8vh;
+    font-family: fr;
+}

@@ -1,0 +1,9 @@
+.winDisplay {
+    display: fixed;
+    font-family: sr;
+    font-size: 8vh;
+    width: 100%;
+    text-align: center;
+    color: green;
+    margin-top: 12vh;
+}

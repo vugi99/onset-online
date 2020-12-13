@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/online/racing/gui/build/static/css/main.css",
+    "main.js": "/online/racing/gui/build/static/js/main.chunk.js",
+    "main.js.map": "/online/racing/gui/build/static/js/main.chunk.js.map",
+    "runtime-main.js": "/online/racing/gui/build/static/js/runtime-main.js",
+    "runtime-main.js.map": "/online/racing/gui/build/static/js/runtime-main.js.map",
+    "static/js/2.chunk.js": "/online/racing/gui/build/static/js/2.chunk.js",
+    "static/js/2.chunk.js.map": "/online/racing/gui/build/static/js/2.chunk.js.map",
+    "index.html": "/online/racing/gui/build/index.html",
+    "precache-manifest.aed0cdc34b7a14dcb87983196ae76d30.js": "/online/racing/gui/build/precache-manifest.aed0cdc34b7a14dcb87983196ae76d30.js",
+    "service-worker.js": "/online/racing/gui/build/service-worker.js",
+    "static/css/main.css.map": "/online/racing/gui/build/static/css/main.css.map",
+    "static/js/2.chunk.js.LICENSE": "/online/racing/gui/build/static/js/2.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.js",
+    "static/js/2.chunk.js",
+    "static/css/main.css",
+    "static/js/main.chunk.js"
+  ]
+}

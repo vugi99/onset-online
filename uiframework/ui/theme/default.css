@@ -1,0 +1,456 @@
+/* Not finished and dirty at the moment */
+/* ToDo: more variables and the same color on all selections */
+body {
+  overflow: hidden;
+}
+body,
+* {
+  user-select: none;
+  cursor: default;
+}
+/* ToDo: It's a bad idea to make the color or text-shadow here need to change*/
+/*
+body {
+    
+}
+*/
+/* color picker container */
+.color-picker-container {
+  border: 5px solid #252e38;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+}
+.color-picker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  box-shadow: none;
+}
+#screen {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow: hidden;
+  /* color picker */
+  /* dialog style */
+  /* button style */
+  /* progressbar style */
+  /* checkbox style */
+}
+#screen ::-webkit-scrollbar {
+  width: 15px;
+}
+#screen ::-webkit-scrollbar-track {
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #e0e0e0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#screen ::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 10px 10px #252e38;
+  border: solid 5px transparent;
+}
+#screen div,
+#screen span,
+#screen p,
+#screen select,
+#screen option {
+  font-family: 'Source Sans Pro';
+  font-size: 12pt;
+  color: #fff;
+  text-shadow: 0px 0px 3px #000;
+}
+#screen div,
+#screen p,
+#screen span,
+#screen h1,
+#screen h2,
+#screen h3,
+#screen h4 {
+  font-family: 'Source Sans Pro';
+  color: #fff;
+  text-shadow: 0px 0px 3px #000;
+  font-weight: normal;
+}
+#screen h4 {
+  margin: 0px;
+  padding: 0px;
+  font-size: 14pt;
+}
+#screen h4 span {
+  font-size: 14pt;
+}
+#screen h3 {
+  margin: 0px;
+  padding: 0px;
+  font-size: 16pt;
+}
+#screen h3 span {
+  font-size: 16pt;
+}
+#screen h2 {
+  margin: 0px;
+  padding: 0px;
+  font-size: 18pt;
+}
+#screen h2 span {
+  font-size: 18pt;
+}
+#screen h1 {
+  margin: 0px;
+  padding: 0px;
+  font-size: 20pt;
+}
+#screen h1 span {
+  font-size: 20pt;
+}
+#screen :focus {
+  outline: none;
+}
+#screen .ui-color-picker {
+  position: relative;
+}
+#screen .ui-color-picker input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border-radius: 5px;
+}
+#screen .ui-color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+#screen .ui-color-picker input[type="color"]::-webkit-color-swatch {
+  border: 5px solid #252e38;
+  border-radius: 16px;
+}
+#screen .ui-color-picker .title {
+  position: relative;
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  top: -10px;
+}
+#screen .dialog {
+  position: absolute;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+  top: 250px;
+  left: 350px;
+  width: 400px;
+  padding: 10px;
+  border-radius: 15px;
+  background: linear-gradient(to bottom, rgba(43, 53, 65, 0.95) 0%, rgba(37, 46, 56, 0.95) 100%);
+}
+#screen .dialog.active {
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9);
+}
+#screen .dialog > .title {
+  position: relative;
+  color: #fff;
+  /*@dialog-title-text-color; */
+  margin: -10px -10px 10px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  background: #252e38;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+#screen .dialog > .title .button-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: #9e3640;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 2px;
+  text-shadow: none;
+  line-height: 22px;
+  cursor: pointer;
+}
+#screen .dialog > .title .button-close * {
+  cursor: pointer;
+}
+#screen .dialog > .title .button-close:hover {
+  background: #be5660;
+}
+#screen .dialog > .content {
+  margin: 0px 10px 10px;
+}
+#screen .button {
+  background: #235597;
+  padding: 10px;
+  display: inline-block;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+}
+#screen .button:hover {
+  background: #3365a7;
+  color: white;
+}
+#screen .button.primary {
+  background: #369e40;
+}
+#screen .button.primary:hover {
+  background: #46ae50;
+  color: white;
+}
+#screen .button.secondary {
+  background: #9e3640;
+}
+#screen .button.secondary:hover {
+  background: #ae4650;
+  color: white;
+}
+#screen .textfield {
+  background: #ffffff;
+  display: inline-block;
+  color: black;
+  border: 0px solid black;
+  padding: 5px;
+  margin: 0px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  font-family: 'Source Sans Pro';
+  text-shadow: none;
+  border-radius: 10px;
+  border-width: 3px;
+  border-color: #ffffff;
+}
+#screen .textfield:focus {
+  border-width: 3px;
+  border-color: #4375b7;
+  box-shadow: inset 0px 0px 5px #4375b7;
+}
+#screen ::selection {
+  background: #1e90ff;
+  color: white;
+}
+#screen .progressbar {
+  background: white;
+  height: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2px;
+  overflow: hidden;
+  position: relative;
+  border: 0px;
+  border-radius: 10px;
+}
+#screen .progressbar .title {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  color: #2b2e33;
+  text-shadow: 0px 0px 4px #fff;
+  text-align: center;
+  line-height: 30px;
+  font-family: 'Source Sans Pro';
+}
+#screen .progressbar .progress.blue {
+  overflow: hidden;
+  width: 50%;
+  height: 100%;
+  background: rgba(29, 105, 208, 0.8);
+  border-radius: 10px;
+}
+#screen .progressbar .progress.green {
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to bottom, #6cef47 14%, #3fa84a 89%);
+}
+#screen .checkbox {
+  position: relative;
+  color: white;
+  line-height: 20px;
+}
+#screen .checkbox label {
+  margin: 0px;
+  padding: 0px 0px 0px 30px;
+  display: block;
+  cursor: pointer;
+}
+#screen .checkbox input {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+}
+#screen .checkbox input:checked + .checkbox-helper:before {
+  border-color: #1b2128;
+}
+#screen .checkbox .checkbox-helper:before,
+#screen .checkbox .checkbox-helper:after {
+  position: absolute;
+  content: "";
+  transition: all 200ms;
+}
+#screen .checkbox .checkbox-helper:before {
+  left: 0;
+  background: white;
+  /* border: 2px solid #1b2128; */
+}
+#screen .checkbox input {
+  width: 20px;
+  height: 20px;
+  margin: 0px;
+  padding: 0px;
+}
+#screen .checkbox input:checked + .checkbox-helper:before {
+  background-color: rgba(29, 105, 208, 0.8);
+}
+#screen .checkbox input:checked + .checkbox-helper:after {
+  transform: scale(1);
+  opacity: 1;
+}
+#screen .checkbox .checkbox-helper:before {
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  color: #fff;
+}
+#screen .checkbox .checkbox-helper:after {
+  content: '\2713';
+  font-size: 13px;
+  left: 3px;
+  top: 0px;
+  color: #fff;
+  transform: scale(0);
+  opacity: 0;
+}
+#screen .ui-image {
+  width: 100%;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0px;
+  padding: 0px;
+}
+#screen .ui-option-list {
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  border-radius: 10px;
+  border: 0px;
+  box-shadow: none;
+}
+#screen .ui-option-list select {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  box-shadow: none;
+}
+#screen .ui-option-list option {
+  margin: 0px;
+  padding: 5px;
+  text-shadow: none;
+  color: #303030;
+  font-family: 'Source Sans Pro';
+}
+#screen .dock {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 0px 5px black;
+  height: 50px;
+  width: 500px;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -250px;
+  float: left;
+}
+#screen .field {
+  margin-top: 5px;
+  margin-left: 5px;
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background: rgba(200, 200, 200, 0.1);
+}
+#screen .listview {
+  background: white;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+#screen table {
+  border: 0px solid red;
+  width: 100%;
+}
+#screen table tr td {
+  padding: 5px;
+}
+#screen .ui-accordion-header {
+  background: #1b2128;
+  border-radius: 0px;
+  border: 0px;
+  color: white;
+  border-radius: 10px;
+}
+#screen .ui-accordion-content {
+  border-radius: 0px;
+  background: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+#screen .ui-state-active {
+  background: #7c858e !important;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#screen #notifications {
+  position: absolute;
+  width: 300px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+#screen #notifications li {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+#screen #notifications li .title {
+  position: relative;
+  padding-bottom: 10px;
+}
+#screen #notifications li .title .close-button {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  cursor: pointer;
+}
+#screen #notifications li .title .close-button:hover {
+  color: #cb1f1f;
+}
+#screen #notifications li:hover {
+  background: #000000;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}

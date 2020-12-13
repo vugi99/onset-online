@@ -1,0 +1,11 @@
+html, pre {
+    background-color: transparent;
+    overflow: hidden;
+}
+
+body {
+    font-family: atari;
+    font-weight: 100;
+    font-size: 14px;
+    background-color: transparent;
+}
