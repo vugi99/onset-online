@@ -15,3 +15,6 @@
 * Special vehicles
 * Tab
 * Weapons shops
+
+## [Setup](https://github.com/vugi99/onset-online/wiki/Setup)
+## [Wiki](https://github.com/vugi99/onset-online/wiki)
