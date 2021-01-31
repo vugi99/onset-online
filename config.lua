@@ -62,7 +62,7 @@ car_paint_cost = 500
 Hats_Price = 50
 
 admins = {
-    --"steamid",
+    "",
 }
 
 noclip_speed = 100
@@ -185,6 +185,7 @@ car_dealer_vehicles = {
     {37, 100000},
     {40, 50000},
     {43, 10000},
+    {50, 15000},
 }
 
 weapons_shops_weapons = {

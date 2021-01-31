@@ -135,8 +135,68 @@ end
     end
 end
 
+function O_GetObjectDimension(obj)
+   for i, v in pairs(GetAllDimensions()) do
+       for i2, v2 in ipairs(GetDimensionObjects(i)) do
+          if v2 == obj then
+              return i
+          end
+       end
+   end
+end
+
+function O_GetVehicleDimension(veh)
+    for i, v in pairs(GetAllDimensions()) do
+        for i2, v2 in ipairs(GetDimensionVehicles(i)) do
+           if v2 == veh then
+               return i
+           end
+        end
+    end
+end
+
+function O_GetPickupDimension(pickup)
+   for i, v in pairs(GetAllDimensions()) do
+       for i2, v2 in ipairs(GetDimensionPickups(i)) do
+          if v2 == pickup then
+              return i
+          end
+       end
+   end
+end
+
+function O_GetNPCDimension(npc)
+   for i, v in pairs(GetAllDimensions()) do
+       for i2, v2 in ipairs(GetDimensionNPCS(i)) do
+          if v2 == npc then
+              return i
+          end
+       end
+   end
+end
+
+function O_GetDoorDimension(door)
+   for i, v in pairs(GetAllDimensions()) do
+       for i2, v2 in ipairs(GetDimensionDoors(i)) do
+          if v2 == door then
+              return i
+          end
+       end
+   end
+end
+
+function O_GetText3DDimension(text3d)
+   for i, v in pairs(GetAllDimensions()) do
+       for i2, v2 in ipairs(GetDimensionTexts3D(i)) do
+          if v2 == text3d then
+              return i
+          end
+       end
+   end
+end
+
 function ResetObjectDimension(obj)
-   local id = GetObjectDimension(obj)
+   local id = O_GetObjectDimension(obj)
    if id then
        if dimensions[id] then
           for i, v in ipairs(dimensions[id].objects) do
@@ -150,11 +210,13 @@ function ResetObjectDimension(obj)
 end
 
 function ResetVehicleDimension(veh)
-   local id = GetVehicleDimension(veh)
+   --print("ResetVehicleDimension START", veh)
+   local id = O_GetVehicleDimension(veh)
    if id then
        if dimensions[id] then
           for i, v in ipairs(dimensions[id].vehicles) do
              if v == veh then
+                --print("ResetVehicleDimension DONE", veh)
                 table.remove(dimensions[id].vehicles, i)
                 break
              end
@@ -164,7 +226,7 @@ function ResetVehicleDimension(veh)
 end
 
 function ResetPickupDimension(pid)
-   local id = GetPickupDimension(pid)
+   local id = O_GetPickupDimension(pid)
    if id then
        if dimensions[id] then
           for i, v in ipairs(dimensions[id].pickups) do
@@ -178,7 +240,7 @@ function ResetPickupDimension(pid)
 end
 
 function ResetNPCDimension(npc)
-   local id = GetNPCDimension(npc)
+   local id = O_GetNPCDimension(npc)
    if id then
        if dimensions[id] then
           for i, v in ipairs(dimensions[id].npcs) do
@@ -192,7 +254,7 @@ function ResetNPCDimension(npc)
 end
 
 function ResetDoorDimension(door)
-   local id = GetDoorDimension(door)
+   local id = O_GetDoorDimension(door)
    if id then
        if dimensions[id] then
           for i, v in ipairs(dimensions[id].doors) do
@@ -206,7 +268,7 @@ function ResetDoorDimension(door)
 end
  
 function ResetText3DDimension(text)
-   local id = GetText3DDimension(text)
+   local id = O_GetText3DDimension(text)
    if id then
        if dimensions[id] then
           for i, v in ipairs(dimensions[id].texts3d) do
@@ -347,27 +409,22 @@ end
 
 AddEvent("OnPackageStart",function()
     local default_dim_id = CreateDimension(default_dimension)
-    local IsDefault = false
-    for i,v in ipairs(GetAllPackages()) do
-       if v == "default" then
-          IsDefault = true
-          break
-       end
-    end
-    if not IsDefault then
-       ServerExit("Default package needed, need to be loaded before online")
-    else
-        for i,v in ipairs(GetAllDoors()) do
-           AddDoorInDimension(v, default_dim_id)
-        end
-    end
+   for i,v in ipairs(GetAllDoors()) do
+      AddDoorInDimension(v, default_dim_id)
+   end
 end)
 
 AddEvent("OnPlayerQuit",function(ply)
     local hat_obj = GetPlayerPropertyValue(ply, "HatObject")
     if hat_obj then
-       ResetObjectDimension(hat_obj)
        DestroyObject(hat_obj)
     end
     ResetPlayerDimension(ply, true)
 end)
+
+AddEvent("OnObjectDestroyed", ResetObjectDimension)
+AddEvent("OnVehicleDestroyed", ResetVehicleDimension)
+AddEvent("OnPickupDestroyed", ResetPickupDimension)
+AddEvent("OnNPCDestroyed", ResetNPCDimension)
+AddEvent("OnDoorDestroyed", ResetDoorDimension)
+AddEvent("OnText3DDestroyed", ResetText3DDimension)

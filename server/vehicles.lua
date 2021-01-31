@@ -15,7 +15,6 @@ function ResetPlayerStoredVehicle(ply)
     for i,v in ipairs(playersvehicle) do
         if v.ply == ply then
              if IsValidVehicle(v.veh) then
-                 ResetVehicleDimension(v.veh)
                  DestroyVehicle(v.veh)
              end
              table.remove(playersvehicle, i)
@@ -65,7 +64,6 @@ function ResetPlayerStoredSpecialVehicle(ply)
     for i,v in ipairs(players_special_vehicle) do
         if v.ply == ply then
              if IsValidVehicle(v.veh) then
-                 ResetVehicleDimension(v.veh)
                  DestroyVehicle(v.veh)
              end
              table.remove(players_special_vehicle, i)
@@ -115,7 +113,6 @@ function ResetPlayerStoredAdminVehicle(ply)
     for i,v in ipairs(players_admin_vehicle) do
         if v.ply == ply then
              if IsValidVehicle(v.veh) then
-                 ResetVehicleDimension(v.veh)
                  DestroyVehicle(v.veh)
              end
              table.remove(players_admin_vehicle, i)
@@ -165,7 +162,6 @@ function ResetPlayerStoredPoliceVehicle(ply)
     for i,v in ipairs(players_police_vehicle) do
         if v.ply == ply then
              if IsValidVehicle(v.veh) then
-                 ResetVehicleDimension(v.veh)
                  DestroyVehicle(v.veh)
              end
              table.remove(players_police_vehicle, i)

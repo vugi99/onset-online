@@ -4,7 +4,6 @@ function LoadPlayerHat(ply)
         if PlayerData[ply].hat > 0 then
             local hat_obj = GetPlayerPropertyValue(ply, "HatObject")
             if hat_obj then
-                ResetObjectDimension(hat_obj)
                 DestroyObject(hat_obj)
             end
             local x, y, z = GetPlayerLocation(ply)
@@ -38,7 +37,6 @@ AddRemoteEvent("EnterHatsStore", function(ply, storeid)
         local store = Hats_Stores[storeid]
         local hat_property = GetPlayerPropertyValue(ply, "HatObject")
         if hat_property then
-            ResetObjectDimension(hat_property)
             DestroyObject(hat_property)
             SetPlayerPropertyValue(ply, "HatObject", nil, false)
         end
@@ -58,7 +56,6 @@ AddRemoteEvent("PreviewHat", function(ply, hatid)
     local dim = GetPlayerDimension(ply)
     if GetDimensionName(dim) == "hats_store" then
         for i, v in ipairs(GetDimensionObjects(dim)) do
-            ResetObjectDimension(v)
             DestroyObject(v)
         end
         local x, y, z = GetPlayerLocation(ply)

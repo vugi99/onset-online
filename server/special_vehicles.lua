@@ -50,7 +50,6 @@ end)
 AddRemoteEvent("ShowSpecialVehicle", function(ply, model, stid)
     local dim = GetPlayerDimension(ply)
     for i, v in ipairs(GetDimensionVehicles(dim)) do
-       ResetVehicleDimension(v)
        DestroyVehicle(v)
     end
     local veh = CreateVehicle(model, specials_vehicles_stores[stid].vehicle_show_pos[1], specials_vehicles_stores[stid].vehicle_show_pos[2], specials_vehicles_stores[stid].vehicle_show_pos[3] - 50, specials_vehicles_stores[stid].vehicle_show_rot)
@@ -62,7 +61,6 @@ AddRemoteEvent("ShowSpecialVehicleSpawn", function(ply, index, stid)
     if PlayerData[ply] then
         local dim = GetPlayerDimension(ply)
         for i, v in ipairs(GetDimensionVehicles(dim)) do
-            ResetVehicleDimension(v)
             DestroyVehicle(v)
         end
         local veh = CreateVehicle(PlayerData[ply].special_vehicles[index].model, specials_vehicles_stores[stid].vehicle_show_pos[1], specials_vehicles_stores[stid].vehicle_show_pos[2], specials_vehicles_stores[stid].vehicle_show_pos[3] - 50, specials_vehicles_stores[stid].vehicle_show_rot)

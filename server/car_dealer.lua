@@ -41,7 +41,6 @@ end)
 AddRemoteEvent("ShowcaseCar", function(ply, car_dealer_id, model)
     local id = GetPlayerDimension(ply)
     for i,v in ipairs(GetDimensionVehicles(id)) do
-       ResetVehicleDimension(v)
        DestroyVehicle(v)
     end
     local veh = CreateVehicle(model, car_dealer_showcase[car_dealer_id][1], car_dealer_showcase[car_dealer_id][2], car_dealer_showcase[car_dealer_id][3]-50, car_dealer_showcase[car_dealer_id][4])

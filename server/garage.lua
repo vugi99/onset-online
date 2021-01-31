@@ -137,7 +137,6 @@ AddRemoteEvent("SellVehicle", function(ply, veh)
                       if v.model == GetVehicleModel(veh) then
                          local r, g, b, a = HexToRGBA(GetVehicleColor(veh))
                          if (v.color[1] == r and v.color[2] == g and v.color[3] == b and v.color[4] == a and v.nitro == GetVehiclePropertyValue(veh, "HasNitro") and v.armor == GetVehiclePropertyValue(veh, "VehArmor")) then
-                            ResetVehicleDimension(veh)
                             DestroyVehicle(veh)
                             table.remove(PlayerData[ply].garages[garageid].vehicles, i)
                             Sell(ply, price)
@@ -197,7 +196,6 @@ AddRemoteEvent("MoveGarageVehicle", function(ply, veh, movegarageid)
                      local r, g, b, a = HexToRGBA(GetVehicleColor(veh))
                      if (v.color[1] == r and v.color[2] == g and v.color[3] == b and v.color[4] == a and v.nitro == GetVehiclePropertyValue(veh, "HasNitro") and v.armor == GetVehiclePropertyValue(veh, "VehArmor")) then
                         vehicletbl = v
-                        ResetVehicleDimension(veh)
                         DestroyVehicle(veh)
                         table.remove(PlayerData[ply].garages[garageid].vehicles, i)
                         break

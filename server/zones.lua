@@ -24,7 +24,6 @@ end
 function DestroyZone(zoneid)
     if zones[zoneid] then
         local obj = zones[zoneid].obj
-        ResetObjectDimension(obj)
         DestroyObject(obj)
         zones[zoneid] = nil
     end

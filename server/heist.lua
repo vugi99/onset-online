@@ -121,7 +121,6 @@ end
 function FinishHeistPhase(success)
     if heist_phase_in_progress then
         for i, v in ipairs(heist_vehs) do
-            ResetVehicleDimension(v)
             DestroyVehicle(v)
         end
         for i, v in ipairs(heist_zones) do
@@ -131,7 +130,6 @@ function FinishHeistPhase(success)
             DestroyPickupTrigger(v)
         end
         for i, v in ipairs(heist_objects) do
-            ResetObjectDimension(v)
             DestroyObject(v)
         end
         if success then
@@ -158,12 +156,10 @@ function FinishHeistPhase(success)
                 local _heist_boat = heist_boat
                 SetVehicleLinearVelocity(_heist_boat, heist_final_phase.vector_push_boat[1], heist_final_phase.vector_push_boat[2], heist_final_phase.vector_push_boat[3], true)
                 Delay(7500, function()
-                    ResetVehicleDimension(_heist_boat)
                     DestroyVehicle(_heist_boat)
                 end)
             end
         elseif heist_boat then
-            ResetVehicleDimension(heist_boat)
             DestroyVehicle(heist_boat)
         end
         for i, v in ipairs(GetAllHeistPlayers()) do

@@ -73,4 +73,14 @@ online_changelogs = {
         - Changed a help menu text <br>
         - Fixed an error when buying weapon ammo <br>
     ]]},
+    {"0.2-2",
+    [[
+        - Removed debug kill command <br>
+        - Avoid spawnkill <br>
+        - Reset...Dimension is no longer needed when you destroy an object <br>
+        - Updated noclip <br>
+        - Fixed duel quit menu <br>
+        - default package is no longer required (doors, weapons and vehicle engine are now in this package) <br>
+        - Added vehicle 50 in config.lua <br>
+    ]]},
 }

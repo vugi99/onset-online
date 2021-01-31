@@ -27,7 +27,6 @@ function createcheckpoints(mapname, idnb)
    if checkpoints[id] then
        for i,v in ipairs(checkpoints[id]) do
           DestroyObject(v)
-          ResetObjectDimension(v)
        end
    end
    checkpoints[id] = {}
@@ -155,7 +154,6 @@ AddEvent("OnPlayerLeaveVehicleRacing",function(ply,veh,seat)
          for i,v in ipairs(plyvehs[id]) do
             if v.ply == ply then
                DestroyVehicle(v.vid)
-               ResetVehicleDimension(v.vid)
                table.remove(plyvehs[id],i)
                local ping = GetPlayerPing(ply)
                if ping == 0 then
@@ -187,7 +185,6 @@ AddEvent("OnPlayerQuitRacing",function(ply, idnb, leave)
       if v.ply == ply then
          SetPlayerPropertyValue(ply,"leaving",true,false)
          DestroyVehicle(v.vid)
-         ResetVehicleDimension(v.vid)
          table.remove(plyvehs[id],i)
       end
    end
@@ -249,7 +246,6 @@ function checktorestart(idnb)
       if checkpoints[id] then
          for i,v in ipairs(checkpoints[id]) do
             DestroyObject(v)
-            ResetObjectDimension(v)
          end
       end
       for i,v in ipairs(plyvehs[id]) do

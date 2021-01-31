@@ -103,6 +103,12 @@ function DuelMenuUI()
         end
     end)
     LeaveDuelButton.appendTo(dialog)
+
+    ShowMouseCursor(true)
+    SetIgnoreMoveInput(true)
+    SetIgnoreLookInput(true)
+    SetInputMode(input_while_in_ui)
+    IsInDuelMenuUI = true
 end
 
 AddEvent("OnPlayerActionOnAnotherPlayer", function(hittype, hitid, impactX, impactY, impactZ)

@@ -54,7 +54,6 @@ end)
 AddRemoteEvent("ShowcaseWeapon", function(ply, weapon_shop_id, weapid)
     local id = GetPlayerDimension(ply)
     for i,v in ipairs(GetDimensionObjects(id)) do
-       ResetObjectDimension(v)
        DestroyObject(v)
     end
 
@@ -92,7 +91,6 @@ AddRemoteEvent("BuyWeapon", function(ply, weapid, slot)
                 table.insert(PlayerData[ply].weapons, tbl)
                 local id = GetPlayerDimension(ply)
                 for i,v in ipairs(GetDimensionObjects(id)) do
-                   ResetObjectDimension(v)
                    DestroyObject(v)
                 end
                 SetPlayerWeapon(ply, weapid, ammo, false, slot, false)
@@ -129,7 +127,6 @@ AddRemoteEvent("BuyAmmo", function(ply, weapid, ammo, destroyShowcase)
                  if destroyShowcase then
                      local id = GetPlayerDimension(ply)
                      for i,v in ipairs(GetDimensionObjects(id)) do
-                        ResetObjectDimension(v)
                         DestroyObject(v)
                      end
                  end

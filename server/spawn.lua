@@ -90,17 +90,21 @@ AddEvent("OnPlayerDeath", function(ply, killer)
           local neardist = nil
           for i, v in ipairs(_ONLINE_SPAWNS_TBL) do
              local dist = O_GetDistanceSquared3D(x, y, z, v[1], v[2], v[3])
-             if not neardist then
-                neardist = dist
-                nearloc = {v[1], v[2], v[3], v[4]}
-             elseif dist < neardist then
-                neardist = dist
-                nearloc = {v[1], v[2], v[3], v[4]}
+             local dist_2d_squared_from_player = O_GetDistanceSquared2D(x, y, v[1], v[2])
+             if dist_2d_squared_from_player > 62500 then
+                  if not neardist then
+                     neardist = dist
+                     nearloc = {v[1], v[2], v[3], v[4]}
+                  elseif dist < neardist then
+                     neardist = dist
+                     nearloc = {v[1], v[2], v[3], v[4]}
+                  end
              end
           end
           if neardist then
               SetPlayerSpawnLocation(ply, nearloc[1], nearloc[2], nearloc[3] + 100, nearloc[4])
           else
+              SetPlayerSpawnLocation(ply, x, y, z + 100, 0.0)
               print("Error : no neardist")
           end
        end
@@ -108,6 +112,6 @@ AddEvent("OnPlayerDeath", function(ply, killer)
     end
 end)
 
-AddCommand("kill", function(ply)
+--[[AddCommand("kill", function(ply)
     SetPlayerHealth(ply, 0)
-end)
+end)]]--

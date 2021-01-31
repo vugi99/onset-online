@@ -16,7 +16,6 @@ end
 function DestroyPickupTrigger(pickup)
    for i, v in ipairs(trigger_pickups) do
       if v.id == pickup then
-         ResetPickupDimension(pickup)
          DestroyPickup(pickup)
          table.remove(trigger_pickups, i)
       end
@@ -36,7 +35,6 @@ AddEvent("OnPlayerPickupHit", function(ply, pickup)
                     end
                     if v.destroy_next then
                         table.remove(trigger_pickups, i)
-                        ResetPickupDimension(pickup)
                         DestroyPickup(pickup)
                      end
                  end

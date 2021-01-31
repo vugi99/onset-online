@@ -29,7 +29,6 @@ function SetPlayerPassive(ply, enable, from_client)
     else
         for i,v in ipairs(passive_players) do
             if v.ply == ply then
-               ResetText3DDimension(v.text)
                DestroyText3D(v.text)
                table.remove(passive_players,i)
                if not from_client then
