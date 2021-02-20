@@ -112,3 +112,21 @@ for i,v in ipairs(Hats_Stores) do
     table.insert(legendkeys[12].blips, {v[1][1], v[1][2]})
 end
 
+legendkeys[13] = {}
+legendkeys[13].iconPath = "http://asset/" .. GetPackageName() .. "/pinmap/client/web/icons/training_icon.png" -- https://thenounproject.com/term/shooting-range/368084/
+legendkeys[13].displayText = "Training"
+legendkeys[13].blips = {}
+
+for i,v in ipairs(_Training) do
+    table.insert(legendkeys[13].blips, {v.npc[1], v.npc[2]})
+end
+
+legendkeys[14] = {}
+legendkeys[14].iconPath = "http://asset/" .. GetPackageName() .. "/pinmap/client/web/icons/bunker_icon.png" -- https://thenounproject.com/term/radiation/368070/
+legendkeys[14].displayText = "Bunker"
+legendkeys[14].blips = {}
+
+for i,v in ipairs(_Bunkers) do
+    table.insert(legendkeys[14].blips, {v.Bunker_enter_location[1], v.Bunker_enter_location[2]})
+end
+

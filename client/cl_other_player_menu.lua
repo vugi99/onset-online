@@ -54,14 +54,18 @@ function OtherPlayerUI(ply)
     DuelButton.setTitle("Ask " .. plyname .. " for a duel")
     DuelButton.onClick(function(obj)
         if not InHeistPhase then
-            if (IsValidPlayer(ply) and GetPlayerName(ply) == plyname) then -- the player is maybe a new player ... , this won't work if they have the same name
-                dialog.destroy()
-                LeaveOtherPlayerUI()
-                CallRemoteEvent("AskForDuel", ply)
+            if not InBunkerMission then
+                if (IsValidPlayer(ply) and GetPlayerName(ply) == plyname) then -- the player is maybe a new player ... , this won't work if they have the same name
+                    dialog.destroy()
+                    LeaveOtherPlayerUI()
+                    CallRemoteEvent("AskForDuel", ply)
+                else
+                    AddPlayerChat("Player invalid")
+                    dialog.destroy()
+                    LeaveOtherPlayerUI()
+                end
             else
-                AddPlayerChat("Player invalid")
-                dialog.destroy()
-                LeaveOtherPlayerUI()
+                CreateNotification("Bunker", "You can't do a duel while doing a bunker mission", 5000)
             end
         else
             CreateNotification("Heist", "You can't do a duel while being in a heist", 5000)

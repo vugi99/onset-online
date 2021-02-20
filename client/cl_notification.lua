@@ -85,7 +85,7 @@ function CreateActivityNotification(title, content, eventname, lobbyid, timeout)
     local JoinActivityButton = UIButton()
     JoinActivityButton.setTitle("Join")
     JoinActivityButton.onClick(function(obj)
-        if (GetPlayerVehicle(GetPlayerId()) == 0 and not IsInRacingUI and not IsInARace and not IsInDuel and not InHeistPhase) then
+        if (GetPlayerVehicle(GetPlayerId()) == 0 and not IsInRacingUI and not IsInARace and not IsInDuel and not InHeistPhase and not IsTraining and not InBunkerMission) then
             for i,v in ipairs(activity_notifications) do
                 v[1].destroy()
             end

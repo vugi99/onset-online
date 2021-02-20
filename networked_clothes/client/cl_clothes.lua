@@ -29,12 +29,16 @@ local function customlogic(sk,part)
    end
 end
 
-local function SetClothes(ply,plyclothestbl)
+function NSetClothes(ply,plyclothestbl)
    if plyclothestbl then
       if plyclothestbl.type ~= nil then
          if plyclothestbl.type == "preset" then
-           SetPlayerClothingPreset(ply, plyclothestbl.clothes)
+            SetPlayerVoiceTone(ply, "male")
+            SetPlayerClothingPreset(ply, plyclothestbl.clothes)
          elseif plyclothestbl.type == "custom" then
+            if plyclothestbl.gender then
+                SetPlayerVoiceTone(ply, plyclothestbl.gender)
+            end
             local clothes = plyclothestbl.clothes
             if clothes.body then
                local sk = GetPlayerSkeletalMeshComponent(ply, "Body")
@@ -143,7 +147,7 @@ end
 
 AddEvent("OnPlayerNetworkUpdatePropertyValue",function(ply,pname,pval)
     if (IsValidPlayerEvenLocal(ply) and pname == "NetworkedClothes") then
-       SetClothes(ply,pval)
+      NSetClothes(ply,pval)
     end
 end)
 
@@ -154,7 +158,7 @@ AddEvent("OnNPCNetworkUpdatePropertyValue",function(npc,pname,pval)
 end)
 
 AddEvent("OnPlayerStreamIn",function(ply)
-   SetClothes(ply,GetPlayerPropertyValue(ply, "NetworkedClothes"))
+   NSetClothes(ply,GetPlayerPropertyValue(ply, "NetworkedClothes"))
 end)
 
 AddEvent("OnNPCStreamIn",function(npc)
@@ -162,5 +166,5 @@ AddEvent("OnNPCStreamIn",function(npc)
 end)
 
 AddEvent("OnPlayerSpawn",function()
-   SetClothes(GetPlayerId(),GetPlayerPropertyValue(GetPlayerId(), "NetworkedClothes"))
+   NSetClothes(GetPlayerId(),GetPlayerPropertyValue(GetPlayerId(), "NetworkedClothes"))
 end)

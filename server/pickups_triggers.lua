@@ -26,18 +26,18 @@ AddEvent("OnPlayerPickupHit", function(ply, pickup)
     if GetPlayerVehicle(ply) == 0 then
         for i, v in ipairs(trigger_pickups) do
            if v.id == pickup then
-              for i2, v2 in ipairs(pickups_triggers) do
-                 if v2[1] == v.model then
-                    if v.overwrite_event then
-                        CallEvent(v.overwrite_event, ply, pickup)
-                    else
-                        CallEvent(v2[2], ply, pickup)
-                    end
-                    if v.destroy_next then
-                        table.remove(trigger_pickups, i)
-                        DestroyPickup(pickup)
+               if v.overwrite_event then
+                  CallEvent(v.overwrite_event, ply, pickup)
+               else
+                  for i2, v2 in ipairs(pickups_triggers) do
+                     if v2[1] == v.model then
+                           CallEvent(v2[2], ply, pickup)
                      end
-                 end
+                  end
+               end
+              if v.destroy_next then
+                  table.remove(trigger_pickups, i)
+                  DestroyPickup(pickup)
               end
               break
            end

@@ -17,7 +17,7 @@ function LeavePoliceman(ply)
     for i,v in ipairs(Police_players) do
         if v == ply then
            if PlayerData[ply] then
-              SetPlayerNetworkedClothingPreset(ply, PlayerData[ply].clothes)
+              OnlineSetClothes(ply, PlayerData[ply].clothes)
            end
            ResetPlayerStoredPoliceVehicle(ply)
            table.remove(Police_players, i)
@@ -84,6 +84,7 @@ AddRemoteEvent("SetPoliceServer", function(ply, Policeman)
        if Policeman then
           if not IsPoliceman(ply) then
              table.insert(Police_players, ply)
+             ResetPlayerBody(ply)
              SetPlayerNetworkedClothingPreset(ply, 13)
           else
               print("Warning : Trying to set police on server while already policeman")

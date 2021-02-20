@@ -61,8 +61,19 @@ car_paint_cost = 500
 
 Hats_Price = 50
 
+_Shooting_range_price = 25
+_Shooting_range_bullets = 60
+_Shooting_range_xp_earned = 150 -- xp at 100 accuracy
+_CQB_price = 50
+_CQB_max_public_records = 3
+_CQB_xp_earned = 200
+
+_Bunkers_raw_materials_steal_xp_earned = 400
+_Bunkers_raw_materials_steal_kill_bonus = 5000
+_Bunkers_weapons_sell_kill_bonus = 10000
+
 admins = {
-    "",
+    --"steamid",
 }
 
 noclip_speed = 100
@@ -126,33 +137,6 @@ spawns["town2"] = {
     y = -38049.000000,
     z = 1243.000000,
     roty = 0.0,
-}
-
-Clothing_presets_clothes = {
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    25,
-    26,
-    27,
-    28,
-    29,
 }
 
 atms_objects = {
@@ -255,7 +239,7 @@ wycd_text = [[
 
 action_distance = 275
 
-spawn_loc = {123051.28125, 168244.5625, 3114.56494, 0.0} -- x, y, z, ry
+spawn_loc = {123051.28125, 168295, 3114.56494, 0.0} -- x, y, z, ry
 
 input_while_in_ui = INPUT_GAMEANDUI
 
@@ -299,6 +283,8 @@ actions = {
     {4, 10, "OnPlayerHatsStoreAction"},
     {5, 1475, "OnPlayerHeistFinalPhaseTakeMoney"},
     {3, 14, "OnPlayerHeistFinalPhasePutMoney"},
+    {4, 29, "OnPlayerTraining"},
+    {4, 12, "OnPlayerBunker"},
 }
 
 garages = {}
@@ -476,6 +462,12 @@ Onset_Customs = {
         {139934, 207563, 1330, 60}, -- cam x, y, z, h
         {141519, 206303, 1289, 0}, -- exit x, y, z, h
     },
+    {
+        {22758, 134529, 23231, 136065, 1552}, -- zone minx, miny, maxx, maxy, z
+        {22119, 134887, 1553, 0}, -- vehicle x, y, z, h
+        {22649, 135046, 1594, -164}, -- cam x, y, z, h
+        {23127, 137102, 1552, 90}, -- exit x, y, z, h
+    },
 }
 
 Hats_Objects = {
@@ -487,6 +479,30 @@ Hats_Stores = {
     {
         {181339, 186803, 1299, -130}, -- npc x, y, z, h
         {180906, 186492, 1299, 90}, -- player teleport x, y, z, h
+    },
+}
+
+_Training = { -- You shouldn't add more Training locations yourself
+    {
+        npc = {-14486, 135909, 1559, 0}, -- npc x, y, z, h
+        shooting_range_location = {-14473, 135666, 1558, -175}, -- shooting range teleport player x, y, z, h
+        CQB_spawn_location = {-13708, 135450, 1558, -70},
+        CQB_targets_locations = {
+            {-13535, 134097},
+            {-14048, 132851},
+            {-14218, 132898},
+            {-14252, 133255},
+            {-14777, 132768},
+            {-15408, 132895},
+            {-14373, 134063},
+            {-14374, 134357},
+            {-15327, 134990},
+            {-15023, 135016},
+        },
+        CQB_Objects = {
+            {1, -14180, 135230, 1621, 0, 5, 0, 3.18, 1, 3.23}, -- modelid, x, y, z, rx, ry, rz, sx, sy, sz
+        },
+        CQB_end_trigger = {-14495, 135313, 1558},
     },
 }
 
@@ -701,4 +717,395 @@ heist_final_phase = {
     waypoint_loc = {184392, 202901, 155},
     vector_push_boat = {-30000, 0, 0},
     kill_bonus_robber = 2000,
+}
+
+----------------------------------------------------------------------------------------------------------
+-- BUNKERS CONFIG
+
+_Bunkers_raw_materials_steal_locations = {
+    {988, 146650, -137699, 1151, "military"}, -- pickup modelid, x, y, z, location text for police alert
+    {988, 165472, -157689, 1166, "military"},
+}
+
+_Bunker_SellWeapons = {
+    final_zone = {-59570, 150971, -56966, 151608, 170}, -- minx, miny, maxx, maxy, z
+}
+
+_Bunkers = {
+    {
+        Bunker_price = 100000,
+
+        Bunker_enter_location = {46389, 48157, 3058}, -- x, y, z
+        Bunker_spawn_after_exit = {46336, 48427, 3022, 100}, -- x, y, z, h
+
+        Bunker_spawn_after_enter = {46060, 48150, 2263, 180}, -- x, y, z, h
+        Bunker_exit_location = {46410, 48154, 2263}, -- x, y, z
+        
+        Bunker_NPC_Waiting = {"SIT04", 45774.98828125, 48310, 2263, -90}, -- anim, x, y, z, h
+        Bunker_NPC_Working = {"BARCLEAN01", 45957, 48283, 2263, 90}, -- anim, x, y, z, h
+
+        Bunker_progress_text3d_location = {45621, 48189, 2263}, -- x, y, z
+
+        Bunker_Interval_To_Add_1_percent_s = 36,
+        Raw_materials_steal_add_percent = 25, -- add ... percent of raw mats in storage when stealing raw mats
+        Full_Raw_Materials_price = 20000,
+        Bunker_Full_Sell_Money = 25000,
+
+        Bunker_Working_Objects = {
+            {13, 45942.2421875, 48348.53515625, 2261.4875488281, 90, -90, 0, 1, 1, 1}, -- modelid, x, y, z, rx, ry, rz, sx, sy, sz
+            {986, 45872.5625, 48373.30859375, 2259.9440917969, 0, 24.249610900879, 0, 0.45, 0.8, 0.4},
+            {987, 45985.64453125, 48397.296875, 2259.8813476, 0, -5.3097558021545, 0, 0.45, 0.8, 0.4},
+            {13, 45851.50390625, 48386.36328125, 2270.4096679, 0, -65, 0, 1, 1, 1},
+            {13, 45853.98046875, 48380.5234375, 2270.4096679, 0, -65, 0, 1, 1, 1},
+        },
+        Bunker_Objects = {
+            {952, 45774.98828125, 48351.9296875, 2167.8408203125, 0, 0, 0, 1, 1, 1}, -- modelid, x, y, z, rx, ry, rz, sx, sy, sz
+            {542, 45927.7578125, 48361.359375, 2167.8408203125, 0, 0, 0, 1, 1, 1},
+        },
+
+        Bunker_Percentage_Objects = {
+            {
+                p = 10,
+                objects = {
+                    {985, 45362.421875, 48311.69921875, 2348.951171875, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45247.25, 48311.69921875, 2348.951171875, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+            {
+                p = 20,
+                objects = {
+                    {985, 45210.5625, 48239.4453125, 2167.8408203125, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45307.76953125, 48239.4453125, 2167.8408203125, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+            {
+                p = 30,
+                objects = {
+                    {985, 45405.15234375, 48239.4453125, 2167.8408203125, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45210.5625, 48239.4453125, 2192.0764160156, 0, 0, 0, 0.45, 0.8, 0.4}, -- z dist = 24.2355957031
+                }
+            },
+            {
+                p = 40,
+                objects = {
+                    {985, 45307.76953125, 48239.4453125, 2192.0764160156, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45405.15234375, 48239.4453125, 2192.0764160156, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+            {
+                p = 50,
+                objects = {
+                    {985, 45210.5625, 48239.4453125, 2216.31201172, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45307.76953125, 48239.4453125, 2216.31201172, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+            {
+                p = 60,
+                objects = {
+                    {985, 45405.15234375, 48239.4453125, 2216.31201172, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45210.5625, 48239.4453125, 2240.54760742, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+            {
+                p = 70,
+                objects = {
+                    {985, 45307.76953125, 48239.4453125, 2240.54760742, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45405.15234375, 48239.4453125, 2240.54760742, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+            {
+                p = 80,
+                objects = {
+                    {985, 45210.5625, 48239.4453125, 2264.78320312, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45307.76953125, 48239.4453125, 2264.78320312, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+            {
+                p = 90,
+                objects = {
+                    {985, 45405.15234375, 48239.4453125, 2264.78320312, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45210.5625, 48239.4453125, 2289.01879882, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+            {
+                p = 100,
+                objects = {
+                    {985, 45307.76953125, 48239.4453125, 2289.01879882, 0, 0, 0, 0.45, 0.8, 0.4},
+                    {985, 45405.15234375, 48239.4453125, 2289.01879882, 0, 0, 0, 0.45, 0.8, 0.4},
+                }
+            },
+        },
+    },
+}
+
+----------------------------------------------------------------------------------------------------
+-- CLOTHES CONFIG
+
+
+Clothing_presets_clothes = {
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    25,
+    26,
+    27,
+    28,
+    29,
+}
+
+Advanced_clothing_presets = {
+    male = {
+        {
+            clothes = {
+                body = {"/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal01_LPR", false, false, false, {"/Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body_NoShoesLegsTorso", 3}},
+                clothing0 = {"/Game/CharacterModels/BikerSuit/Meshes/SK_BikerSuit"},
+            },
+        },
+        {
+            clothes = {
+                body = {"/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal01_LPR", false, false, false, {"/Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body_NoShoesLegsTorso", 3}},
+                clothing0 = {"/Game/CharacterModels/BikerSuit/Meshes/SK_BikerSuit"},
+                clothing1 = {"/Game/CharacterModels/BikerSuit/Meshes/SK_BikerHelmet"},
+            },
+        },
+    },
+    female = {
+
+    },
+}
+
+Clothing_bodies = {
+    male = {
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal01_LPR",
+            hair = true,
+            body_mask_slot = 3,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal02_LPR",
+            body_mask_slot = 3,
+            hair = true
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal03_LPR",
+            body_mask_slot = 3,
+            hair = true
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal04_LPR",
+            body_mask_slot = 0,
+            hair = true
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal05_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal06_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal07_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal08_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal09_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal10_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal11_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal12_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal13_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal14_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal15_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal16_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal17_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal18_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal19_LPR",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/SkeletalMesh/BodyMerged/HZN_CH3D_Normal20_LPR",
+            body_mask_slot = 0,
+        },
+    },
+    female = {
+        {
+            path = "/Game/CharacterModels/Female/Meshes/SK_Female01",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/Female/Meshes/SK_Female02",
+            body_mask_slot = 0,
+        },
+        {
+            path = "/Game/CharacterModels/Female/Meshes/SK_Female03",
+            body_mask_slot = 0,
+        },
+    }
+}
+
+Clothing_hairs = {
+    male = {
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair01",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair02",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair03",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair04",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair05",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair06",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair07",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair08",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair09",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair10",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair11",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair12",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair13",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair14",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair15",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair16",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair17",
+        "/Game/CharacterModels/SkeletalMesh/SK_Hair18",
+    },
+    female = {
+        "/Game/CharacterModels/Female/Meshes/SK_Hair01",
+        "/Game/CharacterModels/Female/Meshes/SK_Hair02",
+        "/Game/CharacterModels/Female/Meshes/SK_Hair03",
+    }
+}
+
+Clothing_torso = {
+    male = {
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_TShirt_LPR", true},
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_TShirt_Knitted_LPR", true},
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_TShirt_Knitted2_LPR", true},
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_Shirt_LPR", true},
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_FormalShirt_LPR", true},
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_FormalShirt2_LPR", true},
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Knitted_Shirt_LPR", true},
+        {"/Game/CharacterModels/Clothing/Meshes/SK_Undershirt01"},
+        {"/Game/CharacterModels/Clothing/Meshes/SK_TShirt01", true},
+        {"/Game/CharacterModels/Clothing/Meshes/SK_ShirtCombo01", true}, --path, can't put jacket
+        {"/Game/CharacterModels/Clothing/Meshes/SK_Pullover", true},
+    },
+    female = {
+        {"/Game/CharacterModels/Female/Meshes/SK_Undershirt01"},
+        {"/Game/CharacterModels/Female/Meshes/SK_TShirt02", true},
+        {"/Game/CharacterModels/Female/Meshes/SK_TShirt01", true},
+        {"/Game/CharacterModels/Female/Meshes/SK_ShirtCombo01", true},
+        {"/Game/CharacterModels/Female/Meshes/SK_Pullover01", true},
+        {"/Game/CharacterModels/Female/Meshes/HZN_Outfit_Piece_Shirt_LPR", true},
+        {"/Game/CharacterModels/Female/Meshes/HZN_Outfit_Piece_FormalShirt_LPR", true},
+        {"/Game/CharacterModels/Female/Meshes/SK_Jacket02", true},
+        {"/Game/CharacterModels/Female/Meshes/SK_Jacket01", true},
+    }
+}
+
+Clothing_jackets = {
+    male = {
+        "/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_Labcoat_LPR",
+        "/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_FormalJacket_LPR",
+    },
+    female = {
+        "/Game/CharacterModels/Female/Meshes/HZN_Outfit_Piece_FormalJacket_LPR",
+        "/Game/CharacterModels/Female/Meshes/HZN_Outfit_Piece_Labcoat_LPR",
+    }
+}
+
+Clothing_pants = {
+    male = {
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_FormalPants_LPR", true}, -- hide legs
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_DenimPants_LPR", true},
+        {"/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_CargoPants_LPR", true},
+        {"/Game/CharacterModels/Clothing/Meshes/SK_Shorts01"},
+        {"/Game/CharacterModels/Clothing/Meshes/SK_Jeans01", true},
+    },
+    female = {
+        {"/Game/CharacterModels/Female/Meshes/SK_Shorts01"},
+        {"/Game/CharacterModels/Female/Meshes/SK_Pants02", true},
+        {"/Game/CharacterModels/Female/Meshes/SK_Pants01", true},
+        {"/Game/CharacterModels/Female/Meshes/SK_Jeans01", true},
+        {"/Game/CharacterModels/Female/Meshes/HZN_Outfit_Piece_FormalPants_LPR", true},
+        {"/Game/CharacterModels/Female/Meshes/HZN_Outfit_Piece_DenimPants_LPR", true},
+        {"/Game/CharacterModels/Female/Meshes/HZN_Outfit_Piece_CargoPants_LPR", true},
+    },
+}
+
+Clothing_shoes = {
+    male = {
+        "/Game/CharacterModels/Clothing/Meshes/SK_Shoes01",
+        "/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_NormalShoes_LPR",
+        "/Game/CharacterModels/SkeletalMesh/Outfits/HZN_Outfit_Piece_BusinessShoes_LPR"
+    },
+    female = {
+        "/Game/CharacterModels/Female/Meshes/SK_Shoes01",
+        "/Game/CharacterModels/Female/Meshes/SK_Shoes03",
+        "/Game/CharacterModels/Female/Meshes/SK_Shoes04",
+        "/Game/CharacterModels/Female/Meshes/SK_Shoes05",
+        "/Game/CharacterModels/Female/Meshes/SK_Shoes06",
+    }
+}
+
+Body_materials = { -- Don't modify this
+    male = {
+        full = "/Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body", -- /Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body_NoClothes
+        nolegs = "/Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body_NoLegs",
+        noshoes = "/Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body_NoShoes",
+        noshoeslegs = "/Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body_NoShoesLegs",
+        noshoeslegstorso = "/Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body_NoShoesLegsTorso",
+        notorso = "/Game/CharacterModels/Materials/HZN_Materials/M_HZN_Body_NoTorso",
+    },
+    female = {
+        full = "/Game/CharacterModels/Female/Materials/Skins/MI_BodySkin", -- /Game/CharacterModels/Female/Materials/Skins/MI_Body_NoClothes
+        nolegs = "/Game/CharacterModels/Female/Materials/Skins/MI_Body_NoLegs",
+        noshoeslegs = "/Game/CharacterModels/Female/Materials/Skins/MI_Body_NoShoes", -- /Game/CharacterModels/Female/Materials/Skins/MI_Body_NoShoesLegs
+        noshoeslegstorso = "/Game/CharacterModels/Female/Materials/Skins/MI_Body_NoShoesLegs", -- /Game/CharacterModels/Female/Materials/Skins/MI_Body_NoShoesLegsTorso
+    }
 }

@@ -288,25 +288,29 @@ end)
 AddEvent("OnPlayerPoliceAction",function(hittype, hitid, impactX, impactY, impactZ)
     if (not IsPoliceman and not IsInJoinPoliceUI) then
         if not InHeistPhase then
-            if not IsCriminal then
-                if HasAWeaponInInventory() then
-                    PoliceJoinUI()
+            if not InBunkerMission then
+                if not IsCriminal then
+                    if HasAWeaponInInventory() then
+                        PoliceJoinUI()
+                    else
+                        AddPlayerChat("You need to have a weapon to join police")
+                    end
                 else
-                    AddPlayerChat("You need to have a weapon to join police")
+                    CreateNotification("Police", "You lost your weapons", 5000)
+                    CallRemoteEvent("ArrestCriminal", hitid)
+                    SetPostEffect("Chromatic", "Intensity", 5.0)
+                    SetPostEffect("Chromatic", "StartOffset", 0.1)
+                    SetPostEffect("MotionBlur", "Amount", 0.5)
+                    SetPostEffect("Bloom", "Intensity", 1.0)
+                    Delay(5000, function()
+                        SetPostEffect("Chromatic", "Intensity", 0.0)
+                        SetPostEffect("Chromatic", "StartOffset", 0.0)
+                        SetPostEffect("MotionBlur", "Amount", 0.0)
+                        SetPostEffect("Bloom", "Intensity", 0.0)
+                    end)
                 end
             else
-                CreateNotification("Police", "You lost your weapons", 5000)
-                CallRemoteEvent("ArrestCriminal", hitid)
-                SetPostEffect("Chromatic", "Intensity", 5.0)
-                SetPostEffect("Chromatic", "StartOffset", 0.1)
-                SetPostEffect("MotionBlur", "Amount", 0.5)
-                SetPostEffect("Bloom", "Intensity", 1.0)
-                Delay(5000, function()
-                    SetPostEffect("Chromatic", "Intensity", 0.0)
-                    SetPostEffect("Chromatic", "StartOffset", 0.0)
-                    SetPostEffect("MotionBlur", "Amount", 0.0)
-                    SetPostEffect("Bloom", "Intensity", 0.0)
-                end)
+                AddPlayerChat("You can't join Police (bunker mission)")
             end
         else
             AddPlayerChat("You can't join Police (heist)")
@@ -345,6 +349,16 @@ end)
 
 AddRemoteEvent("HeistStealVehAlert", function(steal_pos_str)
     CreateNotification("Police", "Vehicle Stolen at " .. steal_pos_str ..  ", stop it ! Kill the robbers to earn money !", 10000)
+    -- TODO : CreateSound siren sound
+end)
+
+AddRemoteEvent("BunkerRawStealAlert", function(steal_pos_str, name)
+    CreateNotification("Police", "Raw materials stolen at " .. steal_pos_str ..  ", stop it ! Kill the robber (" .. name .. ") to earn money !", 10000)
+    -- TODO : CreateSound siren sound
+end)
+
+AddRemoteEvent("BunkerSellWeaponsAlert", function(name)
+    CreateNotification("Police", "A player started to drive to a weapons sell location, stop him ! Kill the seller (" .. name .. ") to earn money !", 10000)
     -- TODO : CreateSound siren sound
 end)
 

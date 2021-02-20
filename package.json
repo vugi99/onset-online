@@ -1,7 +1,7 @@
 {
 	"author": "Voltaism",
-	"version": "0.2-2",
-        "onset_build": "1.4.2",
+	"version": "0.3",
+        "onset_build": "1.4.3",
         "server_scripts": [
                 "default/WorldDoors.lua",
                 "default/VehicleEngine.lua",
@@ -51,6 +51,8 @@
                 "server/vehicle_armor.lua",
                 "server/hats.lua",
                 "server/heist.lua",
+                "server/training.lua",
+                "server/bunker.lua",
                 "server/errors.lua",
 
                 "pinmap/config.lua",
@@ -103,6 +105,8 @@
                 "client/cl_zones.lua",
                 "client/cl_hats.lua",
                 "client/cl_heist.lua",
+                "client/cl_training.lua",
+                "client/cl_bunker.lua",
 
                 "noclip/client/cl_noclip.lua",
                   
@@ -189,6 +193,8 @@
               "pinmap/client/web/icons/house_icon.png",
               "pinmap/client/web/icons/onset_customs_icon.png",
               "pinmap/client/web/icons/hats_store_icon.png",
+              "pinmap/client/web/icons/training_icon.png",
+              "pinmap/client/web/icons/bunker_icon.png",
 	      "pinmap/client/web/fonts/Roboto-Regular.ttf",
               "pinmap/client/web/fonts/Roboto-Light.ttf",
               
@@ -207,7 +213,9 @@
               "racing/sounds/race_end.mp3",
               "racing/sounds/race_start.mp3",
               "racing/sounds/checkpoint.mp3",
-              "racing/models/finish.pak"
+              "racing/models/finish.pak",
+
+              "sounds/training_sound.mp3"
         ]
 
 }

@@ -114,9 +114,13 @@ end
 AddEvent("OnATMAction",function(hittype, hitid, impactX, impactY, impactZ)
     if not IsInAtmUI then
        if not InHeistPhase then
-            ATMUI()
+            if not InBunkerMission then
+                ATMUI()
+            else
+                CreateNotification("Bunker", "You can't do that", 5000)
+            end
        else
-           CreateNotification("Heist", "You can't do that in a heist", 5000)
+           CreateNotification("Heist", "You can't do that", 5000)
        end
     end
 end)

@@ -101,6 +101,11 @@ end)
 
 AddRemoteEvent("TeleportAdmin", function(ply, x, y, z)
     if IsAdmin(ply) then
-       SetPlayerLocation(ply, x, y, z)
+       local veh = GetPlayerVehicle(ply)
+       if veh == 0 then
+            SetPlayerLocation(ply, x, y, z)
+       else
+           SetVehicleLocation(veh, x, y, z)
+       end
     end
 end)

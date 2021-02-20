@@ -11,7 +11,7 @@ AddEvent("OnKeyPress", function(key)
         else
             if not IsInSpawnUI then
               ShowMouseCursor(false)
-              if not IsInARace then
+              if (not IsInARace and not IsTraining) then
                  SetIgnoreMoveInput(false)
               end
               SetIgnoreLookInput(false)
@@ -32,7 +32,7 @@ AddEvent("OnHideMainMenu", function()
         was_input_1 = false
         if not IsInSpawnUI then
             ShowMouseCursor(false)
-            if not IsInARace then
+            if (not IsInARace and not IsTraining) then
                 SetIgnoreMoveInput(false)
             end
             SetIgnoreLookInput(false)

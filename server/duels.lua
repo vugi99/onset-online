@@ -18,17 +18,13 @@ function PlayerLeaveDuel(ply, left_duel, win)
     for i=1, 3 do
         SetPlayerWeapon(ply, 1, 0, false, i, false)
     end
-    for i, v in ipairs(PlayerData[ply].weapons) do
-        SetPlayerWeapon(ply, v.weapid, v.ammo, false, v.slot, false)
-    end
+    LoadPlayerWeapons(ply)
     if (left_duel or win) then
        Delay(2000, function()
             for i=1, 3 do
                 SetPlayerWeapon(ply, 1, 0, false, i, false)
             end
-            for i, v in ipairs(PlayerData[ply].weapons) do
-                SetPlayerWeapon(ply, v.weapid, v.ammo, false, v.slot, false)
-            end
+            LoadPlayerWeapons(ply)
        end)
     end
     local locbef = GetPlayerPropertyValue(ply, "LocBeforeDuel")

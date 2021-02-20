@@ -57,5 +57,25 @@ function UIContainer()
         return self
     end
 
+    function self.removeChild(child)
+        for key,value in pairs(self.children) do
+            if value.options.id == child.options.id then
+                table.remove(self.children, key)
+                break
+            end
+        end
+
+        local cnt = -1
+        for key,value in ipairs(self.children) do
+            cnt = cnt + 1
+            value.options.parent = self.options.id .. "-".. cnt
+        end
+
+        counter = counter - 1
+        table.remove(self.options.row, #self.options.row)
+        self.update()
+        return self
+    end
+
     return self
 end

@@ -15,6 +15,9 @@
 * Special vehicles
 * Tab
 * Weapons shops
+* Training (shooting range, cqb with records)
+* Bunker
+* Advanced character creation
 
 ## [Setup](https://github.com/vugi99/onset-online/wiki/Setup)
 ## [Wiki](https://github.com/vugi99/onset-online/wiki)

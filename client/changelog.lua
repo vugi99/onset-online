@@ -83,4 +83,16 @@ online_changelogs = {
         - default package is no longer required (doors, weapons and vehicle engine are now in this package) <br>
         - Added vehicle 50 in config.lua <br>
     ]]},
+    {"0.3",
+    [[
+        - Fixed bad pinmap locations <br>
+        - Admin can teleport to a precise location with a car <br>
+        - Added a new Onset Customs in the config <br>
+        - Training (Shooting range, CQB with records) <br>
+        - Bunker <br>
+        - Updated noclip <br>
+        - Fixed animations being played while typing in ui <br>
+        - Updated doors <br>
+        - Advanced character creation <br>
+    ]]},
 }

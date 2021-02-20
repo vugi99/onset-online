@@ -4,7 +4,7 @@ AddEvent("OnKeyPress", function(key)
    if (GetPlayerVehicle(GetPlayerId()) == 0 and not IsInPlayerMenuUI and not IsInSpawnUI) then
       if (key == "Ampersand" or key == OnlineKeys.RESET_ANIMATION_KEY) then
          CallRemoteEvent("PlayAnimationPMENU", "STOP")
-      else
+      elseif GetInputMode() ~= input_while_in_ui then
           local keyid
           for i, v in ipairs(AnimationsKeys) do
              if (v[1] == key or v[2] == key) then

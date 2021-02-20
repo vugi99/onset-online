@@ -70,7 +70,7 @@ AddEvent("PlayerDataLoaded",function(ply)
     if PlayerData[ply].create_chara == 1 then
        CallRemoteEvent(ply,"SpawnUI",0)
     else
-       SetPlayerNetworkedClothingPreset(ply, PlayerData[ply].clothes)
+       OnlineSetClothes(ply, PlayerData[ply].clothes)
        local tbl = {}
        for i, v in ipairs(PlayerData[ply].garages) do
           table.insert(tbl, v.id)

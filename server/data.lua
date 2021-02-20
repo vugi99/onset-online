@@ -16,6 +16,7 @@ AddEvent("OnPackageStart", function()
 	if (db ~= false) then
 		print("MariaDB: Connected to " .. sql_host)
 		mariadb_set_charset(db, SQL_CHAR)
+		CallEvent("DataBaseInit")
 	else
 		print("MariaDB: Connection failed to " .. sql_host .. ", see mariadb_log file")
 		ServerExit()
@@ -45,12 +46,12 @@ end
 
 function OnAccountLoad(ply)
     if (mariadb_get_row_count() == 0) then
-		local query = mariadb_prepare(db, "INSERT INTO accounts (accountid, steam_id, bank_cash, cash, create_chara, clothes, level, xp, is_banned, garages, weapons, animations, energy_bars, criminal_bonus, special_vehicles, playtime, friends, friends_settings, friends_requests, houses, hat, heist_phase) VALUES (NULL, '?', ?, ?, ?, ?, ?, ?, ?, '?', '?', '?', ?, ?, '?', ?, '?', '?', '?', '?', ?, ?);",
+		local query = mariadb_prepare(db, "INSERT INTO accounts (accountid, steam_id, bank_cash, cash, create_chara, clothes, level, xp, is_banned, garages, weapons, animations, energy_bars, criminal_bonus, special_vehicles, playtime, friends, friends_settings, friends_requests, houses, hat, heist_phase, cqb_record, bunkers) VALUES (NULL, '?', ?, ?, ?, '?', ?, ?, ?, '?', '?', '?', ?, ?, '?', ?, '?', '?', '?', '?', ?, ?, '?', '?');",
 		              tostring(GetPlayerSteamId(ply)),
 		              start_money,
 					  0,
 					  1,
-					  0,
+					  '[]',
 					  1,
 					  0,
 					  0,
@@ -66,10 +67,12 @@ function OnAccountLoad(ply)
 					  '[]',
 					  '[]',
 					  0,
-					  0
+					  0,
+					  '[]',
+					  '[]'
 					)
 
-		mariadb_query(db, query, OnAccountCreated, ply, tostring(GetPlayerSteamId(ply)), start_money, 0, 1, 0, 1, 0, 0, '[]', '[]', '[]', 0, 0, '[]', 0, '[]', Default_friends_settings, '[]', '[]', 0, 0)
+		mariadb_query(db, query, OnAccountCreated, ply, tostring(GetPlayerSteamId(ply)), start_money, 0, 1, '[]', 1, 0, 0, '[]', '[]', '[]', 0, 0, '[]', 0, '[]', Default_friends_settings, '[]', '[]', 0, 0, '[]', '[]')
 	else
 		local data = mariadb_get_assoc(1)
 		PlayerData[ply] = {}
@@ -78,7 +81,7 @@ function OnAccountLoad(ply)
 	    PlayerData[ply].bank_cash = tonumber(data["bank_cash"])
 	    PlayerData[ply].cash = tonumber(data["cash"])
 	    PlayerData[ply].create_chara = tonumber(data["create_chara"])
-		PlayerData[ply].clothes = tonumber(data["clothes"])
+		PlayerData[ply].clothes = json_decode(data["clothes"])
 		PlayerData[ply].level = tonumber(data["level"])
 		PlayerData[ply].xp = tonumber(data["xp"])
 		PlayerData[ply].is_banned = tonumber(data["is_banned"])
@@ -95,6 +98,8 @@ function OnAccountLoad(ply)
 		PlayerData[ply].houses = json_decode(data["houses"])
 		PlayerData[ply].hat = tonumber(data["hat"])
 		PlayerData[ply].heist_phase = tonumber(data["heist_phase"])
+		PlayerData[ply].cqb_record = json_decode(data["cqb_record"])
+		PlayerData[ply].bunkers = json_decode(data["bunkers"])
 		if PlayerData[ply].is_banned == 1 then
             KickPlayer(ply, "You are banned")
 		else
@@ -103,7 +108,7 @@ function OnAccountLoad(ply)
 	end
 end
 
-function OnAccountCreated(ply, steamid, bank_cash, cash, create_chara, clothes, level, xp, is_banned, garages, weapons, animations, energy_bars, criminal_bonus, special_vehicles, playtime, friends, friends_settings, friends_requests, houses, hat, heist_phase)
+function OnAccountCreated(ply, steamid, bank_cash, cash, create_chara, clothes, level, xp, is_banned, garages, weapons, animations, energy_bars, criminal_bonus, special_vehicles, playtime, friends, friends_settings, friends_requests, houses, hat, heist_phase, cqb_record, bunkers)
 	local new_id = mariadb_get_insert_id()
 
 	if new_id == false then
@@ -115,7 +120,7 @@ function OnAccountCreated(ply, steamid, bank_cash, cash, create_chara, clothes, 
 	   PlayerData[ply].bank_cash = bank_cash
 	   PlayerData[ply].cash = cash
 	   PlayerData[ply].create_chara = create_chara
-	   PlayerData[ply].clothes = clothes
+	   PlayerData[ply].clothes = json_decode(clothes)
 	   PlayerData[ply].level = level
 	   PlayerData[ply].xp = xp
 	   PlayerData[ply].is_banned = is_banned
@@ -132,6 +137,8 @@ function OnAccountCreated(ply, steamid, bank_cash, cash, create_chara, clothes, 
 	   PlayerData[ply].houses = json_decode(houses)
 	   PlayerData[ply].hat = hat
 	   PlayerData[ply].heist_phase = heist_phase
+	   PlayerData[ply].cqb_record = json_decode(cqb_record)
+	   PlayerData[ply].bunkers = json_decode(bunkers)
 	   print("Account Created " .. ply)
 	   CallEvent("PlayerDataLoaded", ply)
 	end
@@ -148,7 +155,7 @@ function IsInCoolDown(ply)
 
 function SaveData(ply, command, allcommand)
 	if (PlayerData[ply]) then
-		local query = mariadb_prepare(db, "UPDATE accounts SET bank_cash = ?, cash = ?, level = ?, xp = ?, garages = '?', weapons = '?', energy_bars = ?, criminal_bonus = ?, playtime = ?, friends = '?', friends_requests = '?' WHERE accountid = ? LIMIT 1;",
+		local query = mariadb_prepare(db, "UPDATE accounts SET bank_cash = ?, cash = ?, level = ?, xp = ?, garages = '?', weapons = '?', energy_bars = ?, criminal_bonus = ?, playtime = ?, friends = '?', friends_requests = '?', bunkers = '?' WHERE accountid = ? LIMIT 1;",
 					PlayerData[ply].bank_cash,
 					PlayerData[ply].cash,
 					PlayerData[ply].level,
@@ -160,6 +167,7 @@ function SaveData(ply, command, allcommand)
 					PlayerData[ply].playtime,
 					json_encode(PlayerData[ply].friends),
 					json_encode(PlayerData[ply].friends_requests),
+					json_encode(PlayerData[ply].bunkers),
 					PlayerData[ply].accountid
 	    )
 

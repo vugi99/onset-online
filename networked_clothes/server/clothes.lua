@@ -68,11 +68,13 @@ function SetPlayerNetworkedClothingPreset(ply,presetnb)
    return false
 end
 
-function SetPlayerNetworkedCustomClothes(ply,customclothingtbl)
+function SetPlayerNetworkedCustomClothes(ply,customclothingtbl, ids, gender)
    if (IsCustomValid(customclothingtbl) and IsValidPlayer(ply)) then
       local PlayerClothes = {}
       PlayerClothes.type = "custom"
       PlayerClothes.clothes = customclothingtbl
+      PlayerClothes.ids = ids
+      PlayerClothes.gender = gender
       if isReady(ply) then
          SetPlayerPropertyValue(ply, "NetworkedClothes", PlayerClothes,true)
       else
